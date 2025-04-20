@@ -1,0 +1,21 @@
+const express =require("express")
+const mainRoute=express.Router()
+
+
+const chatRoute=require("../modules/chat/message.router")
+const authRouter=require("../modules/auth/auth.router")
+const userRouter=require("../modules/user/user.router")
+const feedbackRouter=require("../modules/Feedback/feedback.router")
+const Pollrouter=require("../modules/Poll/poll.router")
+const Maprouter=require("../modules/Map/map.router")
+const Reviewrouter=require("../modules/Review/review.router")
+const Notificationrouter=require('../modules/Notifications/noti.router')
+mainRoute.use('/auth',authRouter)
+mainRoute.use('/user',userRouter)
+mainRoute.use('/api',chatRoute)
+mainRoute.use('/feedback',feedbackRouter)
+mainRoute.use('/poll',Pollrouter)
+mainRoute.use('/map',Maprouter)
+mainRoute.use('/review',Reviewrouter)
+mainRoute.use('/notification',Notificationrouter)
+module.exports=mainRoute
