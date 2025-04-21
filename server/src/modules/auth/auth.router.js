@@ -11,7 +11,9 @@ authRoute.post('/register',setPath('users'),uploader.single('image'), bodyValida
 
 authRoute.get("/activate/:token",authCtrl.activate)
 authRoute.post('/login',bodyValidator(loginDTO), authCtrl.login)
-
+authRoute.post("/reset",auth,authCtrl.forgotPassword)
+authRoute.put("/reset-password",auth,authCtrl.changePassword)
+authRoute.get("/resettok/:token",authCtrl.checkResetToken)
 authRoute.get("/me",auth,authCtrl.getLoggedIn)
 authRoute.get("/:id",auth,authCtrl.getUserById)
 authRoute.get("/admin",auth,allowRole(['admin','user']),authCtrl.adminAccess)

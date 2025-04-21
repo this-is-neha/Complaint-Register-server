@@ -245,7 +245,138 @@ class AuthController {
             next(exception); // Pass the exception to the global error handler
         }
     }
+    forgotPassword = async (req, res, next) => {
+        try {
+            const { email } = req.body;
+            console.log("Received email:", email);
+
+            if (!email) {
+                console.log("Email not provided");
+                return res.status(400).json({ message: "Email is required" });
+            }
+
+
+            const user = await authSvc.findOneUser({ email });
+            console.log("User found:", user);
+
+            if (!user) {
+                console.log("No user found for this email");
+                throw { code: 422, message: "User with this email does not exist" };
+            }
+
+
+            const resetToken = jwt.sign(
+                { sub: user._id },
+                process.env.JWT_SECRET,
+                { expiresIn: "1h" }
+            );
+            console.log("Generated reset token:", resetToken);
+
+
+            const updateResult = await authSvc.updateUser({ resetToken }, user._id);
+            console.log("Update result:", updateResult);
+
+
+            const resetLink = `${process.env.FRONTEND_URL}/resetp/${resetToken}`;
+            const emailResult = await mailSvc.sendEmail(
+                user.email,
+                "Reset Your Password",
+                `
+                    <p>Hello ${user.name},</p>
+                    <p>Click the link below to reset your password:</p>
+                    <a href="${resetLink}">${resetLink}</a>
+                    <p>If you did not request this, ignore this email.</p>
+                `
+            );
+            console.log("Email sent result:", emailResult);
+
+            res.json({ message: "Password reset email sent successfully" });
+        } catch (exception) {
+            console.error("Error in forgotPassword:", exception);
+            next(exception);
+        }
+    };
+
     
+    
+    checkResetToken = async (req, res, next) => {
+        try {
+            const token = req.params.token;
+
+            if (!token) {
+                return res.status(400).json({ message: "Token is missing" });
+            }
+
+            console.log("Received token:", token);
+
+            let decoded;
+            try {
+                decoded = jwt.verify(token, process.env.JWT_SECRET);
+                console.log("Decoded token:", decoded);
+            } catch (err) {
+                console.error("JWT verification error:", err);
+                if (err.name === "TokenExpiredError") {
+                    return res.status(400).json({ message: "Token has expired" });
+                }
+                if (err.name === "JsonWebTokenError") {
+                    return res.status(400).json({ message: "Invalid token" });
+                }
+                throw err;
+            }
+
+            // Debugging the user query
+            const filter = { _id: decoded.sub, resetToken: token };
+            console.log("Searching for user with filter:", filter);
+            const user = await authSvc.findOneUserById(filter);
+
+            if (!user) {
+                return res.status(400).json({ message: "Invalid or expired token" });
+            }
+
+            res.json({
+                message: "Token is valid",
+                result: null,
+                meta: null
+            });
+        } catch (exception) {
+            console.error("Error in checkResetToken:", exception);
+            next(exception);
+        }
+    }
+
+
+    changePassword = async (req, res, next) => {
+        try {
+            const { newPassword } = req.body;
+
+
+            if (!newPassword) {
+                return res.status(400).json({ message: "New password is required" });
+            }
+
+
+            if (newPassword.length < 8) {
+                return res.status(400).json({ message: "Password must be at least 8 characters long" });
+            }
+
+                  console.log("New Password id ", newPassword)
+            const user = req.authUser;
+
+
+            const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+            const updatedUser = await authSvc.updateUser({ password: hashedPassword }, user._id);
+
+            res.json({
+                message: "Password updated successfully",
+                result: updatedUser,
+                meta: null
+            });
+        } catch (exception) {
+            console.error("Error in changePassword:", exception);
+            next(exception);
+        }
+    }; 
 
 }
 
