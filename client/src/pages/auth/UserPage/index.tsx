@@ -9,7 +9,7 @@ const ExampleComponent = () => {
   const [, setUserData] = useState(registeredUserData);
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
-  const baseURL = 'http://127.0.0.1:5500//public/uploads/users/';
+  const baseURL = 'http://127.0.0.1:5501//public/uploads/users/';
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
