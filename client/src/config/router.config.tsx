@@ -16,7 +16,8 @@ import MessagePage from "../Message store"
 import OtherPage from "../../src/pages/auth/Another"
 import Complaintss from "../pages/Notifications";
 import Individual from "../pages/auth/Individual complaint";
-
+import ChangePassword from "../pages/auth/Reset";
+import Reactivate from "../pages/auth/Reactivate";
 const RoutingConfig=()=>{
     return (<>
 
@@ -47,6 +48,8 @@ const RoutingConfig=()=>{
 <Route path ="/rate" element={<OtherPage/>}></Route>
 <Route path ="/notification" element={<Complaintss/>}></Route>
 <Route path ="/name/:userId" element={<Individual/>}></Route>
+<Route path="/reset-password" element={<ChangePassword />}></Route>
+<Route path="/reactivate" element={<Reactivate />}></Route>
 
 </Routes>
 

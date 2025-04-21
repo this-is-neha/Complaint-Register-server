@@ -28,22 +28,48 @@
 //     }
 //   });
 
+//   const fetchUserInfo = async () => {
+//     try {
+//       const accessToken = localStorage.getItem("accessToken");
+//       if (!accessToken) throw new Error("Access token not found");
+
+//       const userInfoResponse = await axiosInstance.get('http://localhost:9006/auth/me', {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`
+//         }
+//       });
+
+
+      
+//       auth.loggedInUser = userInfoResponse.data.result; // Storing user data in AuthContext
+//       console.log("I M", userInfoResponse )
+//       console.log("User Info:", userInfoResponse.data.result);
+
+//     } catch (error) {
+//       console.log("Error fetching user info:", error);
+//       toast.error("Failed to fetch user info");
+//     }
+//   };
+
 //   const submitForm = async (data: any) => {
 //     try {
 //       const response = await axiosInstance.post('http://localhost:9006/auth/login', data);
 
 //       localStorage.setItem("accessToken", response.data.result.token.accessToken);
 //       localStorage.setItem("refreshToken", response.data.result.token.refreshToken);
-//     console.log("REsponse is ",response)
-//     const userId = response.data.result.detail._id;
-//     console.log("UderId is :",userId)
-//       auth.loggedInUser = response.data.result.detail;
+      
+//       console.log("Login Response:", response);
+//       const userId = response.data.result.detail._id;
+//       console.log("UserId:", userId);
+      
+//       await fetchUserInfo(); 
 
 //       toast.success("Welcome to " + response.data.result.detail.role + " Panel!");
 //       setShowModal(true);
 //       setTimeout(() => {
 //         setShowModal(false);
-//         navigate("/" + response.data.result.detail.role);
+//        // navigate("/"+ response.data.result.detail.role+`/${userId}`);
+//         navigate(`/`+response.data.result.detail.role+`/${userId}`)
 //       }, 3000);
 //     } catch (exception: any) {
 //       console.log(exception);
@@ -54,13 +80,13 @@
 //   useEffect(() => {
 //     if (auth.loggedInUser) {
 //       toast.info("You are already logged in");
-//       navigate("/" + auth.loggedInUser.role);
+//       // navigate("/" + auth.loggedInUser.role);
 //     }
 //   }, [auth, navigate]);
 
 //   const closeModal = () => {
 //     setShowModal(false);
-//     navigate('/' + auth.loggedInUser.role);
+//     // navigate('/' + auth.loggedInUser.role);
 //   };
 
 //   return (
@@ -68,12 +94,9 @@
 //       <HeaderComponent />
 //       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">
 //         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
-
-
 //           <i className="fas fa-user-plus px-40 text-blue-500 text-7xl"></i>
 //           <br />
 //           <br />
-
 //           <h2 className="mt-14 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
 //             Sign in to your account
 //           </h2>
@@ -160,7 +183,10 @@
 
 
 
-import { useContext, useEffect, useState } from "react";
+
+
+
+import  { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { TextInputField } from "../../../components/common/form";
@@ -181,7 +207,7 @@ const LoginPage = () => {
     password: Yup.string().required()
   });
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, getValues, formState: { errors } } = useForm({
     resolver: yupResolver(loginDto),
     defaultValues: {
       email: "",
@@ -189,26 +215,25 @@ const LoginPage = () => {
     }
   });
 
-  const fetchUserInfo = async () => {
+  const handleForgotPassword = async () => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) throw new Error("Access token not found");
+      const email = getValues("email");
+      if (!email) {
+        toast.error("Please enter your email address first.");
+        return;
+      }
 
-      const userInfoResponse = await axiosInstance.get('http://localhost:9006/auth/me', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
+      await axiosInstance.post('http://localhost:9006/auth/reset', { email }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
       });
 
+      toast.success("Password reset email sent. Please check your inbox.");
 
-      
-      auth.loggedInUser = userInfoResponse.data.result; // Storing user data in AuthContext
-      console.log("I M", userInfoResponse )
-      console.log("User Info:", userInfoResponse.data.result);
 
-    } catch (error) {
-      console.log("Error fetching user info:", error);
-      toast.error("Failed to fetch user info");
+      navigate("/reactivate");
+    } catch (exception: any) {
+      console.log(exception);
+      toast.error(exception.response?.data?.message || "Cannot send reset email at this moment!");
     }
   };
 
@@ -218,19 +243,18 @@ const LoginPage = () => {
 
       localStorage.setItem("accessToken", response.data.result.token.accessToken);
       localStorage.setItem("refreshToken", response.data.result.token.refreshToken);
-      
-      console.log("Login Response:", response);
-      const userId = response.data.result.detail._id;
-      console.log("UserId:", userId);
-      
-      await fetchUserInfo(); 
 
-      toast.success("Welcome to " + response.data.result.detail.role + " Panel!");
+      auth.loggedInUser = response.data.result.detail;
+
+      console.log("User Details:");
+      console.log("Name:", response.data.result.detail.name);
+      console.log("Email:", response.data.result.detail.email);
+      console.log("Address:", response.data.result.detail.address);
+      toast.success("Welcome " + response.data.result.detail.name);
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-       // navigate("/"+ response.data.result.detail.role+`/${userId}`);
-        navigate(`/`+response.data.result.detail.role+`/${userId}`)
+        navigate("/");
       }, 3000);
     } catch (exception: any) {
       console.log(exception);
@@ -241,13 +265,12 @@ const LoginPage = () => {
   useEffect(() => {
     if (auth.loggedInUser) {
       toast.info("You are already logged in");
-      // navigate("/" + auth.loggedInUser.role);
+      navigate("/");
     }
   }, [auth, navigate]);
 
   const closeModal = () => {
     setShowModal(false);
-    // navigate('/' + auth.loggedInUser.role);
   };
 
   return (
@@ -255,11 +278,13 @@ const LoginPage = () => {
       <HeaderComponent />
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
-          <i className="fas fa-user-plus px-40 text-blue-500 text-7xl"></i>
-          <br />
-          <br />
+          <img
+            className="mx-auto h-10 w-auto mt-10"
+            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            alt="Your Company"
+          />
           <h2 className="mt-14 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            LOG IN
           </h2>
         </div>
 
@@ -286,9 +311,13 @@ const LoginPage = () => {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-m text-indigo-600 hover:text-indigo-500">
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
                     Forgot password?
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className="mt-2">
@@ -320,8 +349,12 @@ const LoginPage = () => {
           </p>
         </div>
       </div>
-      <FooterComponent />
+      <br/>
+      <br/>
+      <br/>
 
+      <br/>
+      <FooterComponent />
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-lg shadow-lg">
