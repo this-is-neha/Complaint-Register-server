@@ -116,7 +116,7 @@ const Complaintss: React.FC = () => {
                       <p>Latitude: {complaint.lat}, Longitude: {complaint.lng}</p>
                       <p className="font-bold">Place Name:</p>
                       <p className="font-bold">User ID:</p>
-                      <p>{complaint.userId}</p>
+                      <p>{complaint.userid}</p>
                       <p>{complaint.placeName}</p>
                       <div className="mt-2">
                         <button
