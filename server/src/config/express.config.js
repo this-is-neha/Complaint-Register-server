@@ -1,29 +1,26 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
-const cors = require("cors");
+const cors = require("cors"); // ✅ Only declared once
 const Joi = require("joi");
 
 require("./db.config");
-
 const mainRouter = require("./routing.config");
 
 const app = express();
 
-
 app.use(helmet());
-const cors = require('cors');
 
 app.use(
-    cors({
-      origin: "https://eclectic-entremet-69d9a6.netlify.app",
-      credentials: true,
-    })
-  );
+  cors({
+    origin: "https://eclectic-entremet-69d9a6.netlify.app",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/assets', express.static('./public/'));
-
 
 app.get("/", (req, res) => {
   res.json({
@@ -40,7 +37,8 @@ app.get("/health", (req, res) => {
   });
 });
 
-console.log("This si Neha");
+console.log("This is Neha");
+
 app.use(mainRouter);
 
 // ❌ 404 Handler
