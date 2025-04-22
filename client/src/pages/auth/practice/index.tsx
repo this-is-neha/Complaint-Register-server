@@ -9,7 +9,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 const Activate = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [inputToken, setInputToken] = useState(token || ''); 
   const [activationMessage, setActivationMessage] = useState('');
 
