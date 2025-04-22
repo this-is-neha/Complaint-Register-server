@@ -7,8 +7,7 @@ import { HeaderComponent, FooterComponent } from '../../../components/common';
 import axiosInstance from "axios";
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 const AdminComponent = () => {
-  // Removed unused registeredUserData to avoid compile error
-  // Removed unused setUserData to avoid compile error
+
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
 

@@ -40,10 +40,16 @@ export const ReviewsProvider: React.FC<{ children: ReactNode }> = ({ children })
     try {
       const response = await axios.get<Review[]>('http://localhost:9006/review/rev');
       setReviews(response.data);
-    } catch (error) {
-      console.error('Error fetching reviews:', error);
-      setError('Failed to fetch reviews. Please try again.');
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error fetching reviews:', error.message);
+        setError('Failed to fetch reviews. Please try again.');
+      } else {
+        console.error('Unexpected error:', error);
+        setError('An unexpected error occurred.');
+      }
     }
+    
   };
 
   const handleSubmit = async (newReview: Omit<Review, '_id'>) => {
