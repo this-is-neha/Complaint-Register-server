@@ -320,7 +320,7 @@ import { useUserContext } from '../../../../src/userContext';
 import AuthContext from '../../../../src/context';
 import { HeaderComponent, FooterComponent } from '../../../components/common';
 import axios from 'axios';
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 const RegisterPage = () => {
   const [showModal, setShowModal] = React.useState(false);
   const { setRegisteredUserData } = useUserContext();
@@ -360,7 +360,7 @@ const RegisterPage = () => {
         formData.append(key, data[key]);
       });
 
-      const response = await axios.post('https://complaint-register-server-3.onrender.com/auth/register', formData, {
+      const response = await axios.post(`${baseURL}auth/register`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

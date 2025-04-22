@@ -3,7 +3,7 @@ import axios from 'axios';
 import { HeaderComponent, FooterComponent } from '../../../src/components/common';
 import { useCoordinates, Complaint } from '../../MaoContext';
 import MapModal from '../../MapModal'; 
-
+const baseURL = import.meta.env.VITE_API_BASE_URL; // Ensure this is set in your environment variables
 const Complaintss: React.FC = () => {
   const { coordinates, setCoordinates } = useCoordinates();
   const [loadedComplaints, setLoadedComplaints] = useState<Complaint[]>([]);
@@ -19,7 +19,7 @@ const Complaintss: React.FC = () => {
 
   const fetchComplaints = async (category: string) => {
     try {
-      const response = await axios.get('https://complaint-register-server-3.onrender.com/map/getid', {
+      const response = await axios.get(`${baseURL}/map/getid`, {
         params: { category }
       });
       setLoadedComplaints(response.data);
@@ -31,7 +31,7 @@ const Complaintss: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await axios.delete(`https://complaint-register-server-3.onrender.com/map/delete/${id}`);
+      const response = await axios.delete(`${baseURL}/map/delete/${id}`);
       if (response.status === 200) {
         const updatedComplaints = loadedComplaints.filter(complaint => complaint._id !== id);
         setLoadedComplaints(updatedComplaints);

@@ -110,7 +110,7 @@
 
 // export default Individual;
 
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "axios";
@@ -156,7 +156,7 @@ const Individual = () => {
   const fetchUserComplaints = async (userId: string) => {
     try {
       const token = auth.loggedInUser?.token;
-      const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/map/${userId}`, {
+      const response = await axiosInstance.get(`${baseURL}/map/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

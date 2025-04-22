@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useUserContext } from '../../../userContext';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../../context'; 
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 function Poll() {
   const { registeredUserData } = useUserContext();
   const auth = useContext(AuthContext);
@@ -32,7 +32,7 @@ function Poll() {
 
   const fetchVotes = async () => {
     try {
-      const response = await axios.get('https://complaint-register-server-3.onrender.com/poll/votes');
+      const response = await axios.get(`${baseURL}/poll/votes`);
       const data = response.data;
       const newVotes = candidates.map(candidate => data[candidate] || 0);
       setVotes(newVotes);
@@ -44,7 +44,7 @@ function Poll() {
   const vote = async (candidateIndex:any) => {
     const candidateName = candidates[candidateIndex];
     try {
-      await axios.post(`https://complaint-register-server-3.onrender.com/poll/vote/${candidateName}`);
+      await axios.post(`${baseURL}/poll/vote/${candidateName}`);
       fetchVotes();
     } catch (error) {
       console.error('Error submitting vote:', error);

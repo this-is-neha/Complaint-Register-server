@@ -1,10 +1,10 @@
 
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 import axios from 'axios';
 import { useFormContext } from '../MessageContext';
 import { HeaderComponent, FooterComponent } from '../components/common';
 import {useState, useEffect} from "react"
-
+// Ensure this is set in your .env file
 interface Message {
   _id: string;
   name: string;
@@ -20,7 +20,7 @@ const MessagesPage: React.FC = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('https://complaint-register-server-3.onrender.com/feedback/getid');
+        const response = await axios.get(`${baseURL}/feedback/getid`);
         setLoadedMessages(response.data);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -32,7 +32,7 @@ const MessagesPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await axios.delete(`http://localhost:9006/feedback/delete/${id}`);
+      const response = await axios.delete(`${baseURL}/feedback/delete/${id}`);
       if (response.status === 200) {
         deleteMessage(id);
         setLoadedMessages(prevMessages => prevMessages.filter(message => message._id !== id)); 

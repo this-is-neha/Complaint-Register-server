@@ -196,7 +196,8 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthContext from "../../../../src/context";
 import { FooterComponent, HeaderComponent } from "../../../components/common";
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+console.log("Base URL:", baseURL);
 const LoginPage = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
@@ -223,7 +224,7 @@ const LoginPage = () => {
         return;
       }
 
-      await axiosInstance.post('http://localhost:9006/auth/reset', { email }, {
+      await axiosInstance.post(`${baseURL}/auth/reset`, { email }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
       });
 
@@ -239,7 +240,7 @@ const LoginPage = () => {
 
   const submitForm = async (data: any) => {
     try {
-      const response = await axiosInstance.post('https://complaint-register-server-3.onrender.com/auth/login', data);
+      const response = await axiosInstance.post(`${baseURL}/auth/login`, data);
 
       localStorage.setItem("accessToken", response.data.result.token.accessToken);
       localStorage.setItem("refreshToken", response.data.result.token.refreshToken);

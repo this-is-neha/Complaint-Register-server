@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "axios"; 
 import { toast } from "react-toastify";
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 const Activate = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Activate = () => {
   const activateAccount = async (activationToken:any) => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/auth/activate/${activationToken}`);
+      const response = await axiosInstance.get(`${baseURL}/auth/activate/${activationToken}`);
       setLoading(false);
 
       if (response.data.result) {

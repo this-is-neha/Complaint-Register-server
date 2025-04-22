@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderComponent, FooterComponent } from '../../../components/common';
 import { useCoordinates, Complaint } from '../../../../src/MaoContext';
 import AuthContext from '../../../context';
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 const SearchBox: React.FC = () => {
   const [coordinates, setCoordinates] = useState<Complaint | null>(null);
   const [message, setMessage] = useState<string>('');
@@ -30,7 +30,7 @@ const SearchBox: React.FC = () => {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) throw new Error("Access token not found");
 
-        const userInfoResponse = await axiosInstance.get('https://complaint-register-server-3.onrender.com/auth/me', {
+        const userInfoResponse = await axiosInstance.get(`${baseURL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
@@ -136,7 +136,7 @@ const SearchBox: React.FC = () => {
 
       console.log('Submitting:', newCoordinates); // Check if category is included
 
-      axios.post('http://localhost:9006/map/coordinates', newCoordinates)
+      axios.post(`${baseURL}/map/coordinates`, newCoordinates)
         .then(response => {
           console.log('Data saved:', response.data);
           addCoordinates(newCoordinates); // Update context with new coordinates

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 import { useFormContext } from '../../../MessageContext'; 
 import { HeaderComponent, FooterComponent } from '../../../../src/components/common'; 
 
@@ -21,7 +21,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://complaint-register-server-3.onrender.com/feedback/message', formData);
+      const response = await axios.post(`${baseURL}/feedback/message`, formData);
       if (response.status === 200) {
         addMessage(formData);
         setShowModal(true);

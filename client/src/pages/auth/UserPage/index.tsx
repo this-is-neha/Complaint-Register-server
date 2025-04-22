@@ -3,17 +3,17 @@ import { useUserContext } from '../../../userContext';
 import { useEffect, useState } from "react";
 import { HeaderComponent, FooterComponent } from '../../../components/common';
 import axiosInstance from "axios";
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 const ExampleComponent = () => {
   const { registeredUserData } = useUserContext();
   const [, setUserData] = useState(registeredUserData);
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
-  const baseURL = 'https://complaint-register-server-3.onrender.com/complaint/server/public/uploads/users/';
+  const baseURLL = `${baseURL}/complaint/server/public/uploads/users/`;
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:9006/auth/${userId}`, {
+        const response = await axiosInstance.get(`${baseURL}/auth/${userId}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
@@ -87,7 +87,7 @@ const ExampleComponent = () => {
             {details?.image && (
               <div className="mt-4 flex items-center justify-center">
               <img
-  src={`${baseURL}/${details.image}`}
+  src={`${baseURLL}/${details.image}`}
   alt="User Avatar"
   className="h-full w-[400px] mt-6 border-solid border-red-500 rounded-lg  object-cover bg-black"
 />

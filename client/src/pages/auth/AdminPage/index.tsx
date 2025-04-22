@@ -6,18 +6,18 @@ import { useUserContext } from '../../../userContext';
 import { useEffect, useState } from "react";
 import { HeaderComponent, FooterComponent } from '../../../components/common';
 import axiosInstance from "axios";
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 const AdminComponent = () => {
   const { registeredUserData } = useUserContext();
   const [, setUserData] = useState(registeredUserData);
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
-  const baseURL = 'http://127.0.0.1:5500/complaint/server/public/uploads/users/';
+
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/auth/${userId}`, {
+        const response = await axiosInstance.get(`${baseURL}/auth/${userId}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
