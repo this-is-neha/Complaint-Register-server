@@ -63,7 +63,7 @@ export const SelectComponent = ({ errMsg = null, name, control }: { errMsg?: str
 
 
 
-export const SelectGenderComponent = ({ errMsg = null, name, control, options = [] }: { errMsg?: string | null, options?: any[], name: string, control: any }) => {
+export const SelectGenderComponent = ({ errMsg = null, name, control, }: { errMsg?: string | null, options?: any[], name: string, control: any }) => {
 
   const { field } = useController({
     control: control,

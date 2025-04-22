@@ -3,13 +3,13 @@ import { HeaderComponent, FooterComponent } from "../../../components/common";
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useUserContext } from '../../../userContext';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../../context'; 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 function Poll() {
   const { registeredUserData } = useUserContext();
   const auth = useContext(AuthContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [votes, setVotes] = useState([0, 0, 0, 0, 0, 0, 0]);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const candidates = [

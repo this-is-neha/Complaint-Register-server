@@ -347,7 +347,7 @@ const RegisterPage = () => {
   });
   
 
-  const { control, handleSubmit, setValue, getValues, formState: { errors } } = useForm({
+  const { control, handleSubmit, setValue,  formState: { errors } } = useForm({
     resolver: yupResolver(rules),
   });
 

@@ -2,14 +2,13 @@
 
 
 import { NavLink, useParams } from "react-router-dom";
-import { useUserContext } from '../../../userContext';
 import { useEffect, useState } from "react";
 import { HeaderComponent, FooterComponent } from '../../../components/common';
 import axiosInstance from "axios";
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 const AdminComponent = () => {
-  const { registeredUserData } = useUserContext();
-  const [, setUserData] = useState(registeredUserData);
+  // Removed unused registeredUserData to avoid compile error
+  // Removed unused setUserData to avoid compile error
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
 

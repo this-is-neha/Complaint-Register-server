@@ -1,12 +1,12 @@
 import { NavLink, useParams } from "react-router-dom";
-import { useUserContext } from '../../../userContext';
+// import { useUserContext } from '../../../userContext';
 import { useEffect, useState } from "react";
 import { HeaderComponent, FooterComponent } from '../../../components/common';
 import axiosInstance from "axios";
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 const ExampleComponent = () => {
-  const { registeredUserData } = useUserContext();
-  const [, setUserData] = useState(registeredUserData);
+  // const { registeredUserData } = useUserContext();
+  // const [, setUserData] = useState(registeredUserData);
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
   const baseURLL = `${baseURL}/complaint/server/public/uploads/users/`;
