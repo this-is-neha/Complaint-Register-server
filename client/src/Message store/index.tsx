@@ -14,7 +14,7 @@ interface Message {
 }
 
 const MessagesPage: React.FC = () => {
-  const { messages, deleteMessage } = useFormContext();
+  const {  deleteMessage } = useFormContext();
   const [loadedMessages, setLoadedMessages] = useState<Message[]>([]);
 
   useEffect(() => {

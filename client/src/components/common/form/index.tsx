@@ -35,7 +35,7 @@ export const TextInputField=({control,type="text", name, errMsg, required=true}:
 
 
 
-export const SelectComponent = ({ errMsg = null, name, control, options = [] }: { errMsg?: string | null, options?: any[], name: string, control: any }) => {
+export const SelectComponent = ({ errMsg = null, name, control }: { errMsg?: string | null, options?: any[], name: string, control: any }) => {
 
   const { field } = useController({
     control: control,
