@@ -2,12 +2,12 @@ import banner1 from "../../../assets/banner1.png"
 import banner9 from "../../../assets/banner9.jpg"
 import banner3 from "../../../assets/banner3.jpg"
 import banner7 from "../../../assets/banner7.jpeg"
-
-
 import { FooterComponent, HeaderComponent } from "../../../components/common";
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
-import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import SlickSlider from "react-slick";
+const Slider = SlickSlider as unknown as React.FC<any>;
+
 
 const Aboutus = () => {
   var settings = {
