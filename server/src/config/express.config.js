@@ -14,11 +14,12 @@ const app = express();
 app.use(helmet());
 const cors = require('cors');
 
-app.use(cors({
-  origin: 'https://eclectic-entremet-69d9a6.netlify.app',
-  credentials: true, 
-}));
-
+app.use(
+    cors({
+      origin: "https://eclectic-entremet-69d9a6.netlify.app",
+      credentials: true,
+    })
+  );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/assets', express.static('./public/'));
