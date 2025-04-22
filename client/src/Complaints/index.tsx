@@ -120,7 +120,7 @@ const Complaints: React.FC = () => {
                       <p className="font-bold">Place Name:</p>
                       <p>{complaint.placeName}</p>
                       <p className="font-bold">User ID:</p>
-                      <p>{complaint.userId}</p>
+                      <p>{complaint.userid}</p>
                     
                       <div className="mt-2">
                         <button
