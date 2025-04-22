@@ -35,6 +35,12 @@ app.use((req, res, next) => {
         message: "Resouce not found",
 
     })
+    app.get("/", (req, res) => {
+  res.json({
+    message: "Complaint Register backend is live 🚀",
+  });
+});
+
 
 
 });
