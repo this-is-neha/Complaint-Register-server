@@ -23,7 +23,7 @@ required:true
 type:String
 
   },
-  userId: {
+  userid: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User',
     required:true

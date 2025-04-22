@@ -6,20 +6,20 @@ class Map {
  
 
   MapController = async (req, res) => {
-    const { lat, lng, message, placeName, category, userId } = req.body; // Extract userId from the request body
+    const { lat, lng, message, placeName, category, userid } = req.body; // Extract userId from the request body
     console.log('Received coordinates:', lat, lng);
     console.log("Message", message);
     console.log("Place", placeName);
     console.log("Category", category);
-    console.log("User ID", userId); // Debug log for userId
+    console.log("User ID", userid); // Debug log for userId
 
     // Validate userId
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    if (!userid || !mongoose.Types.ObjectId.isValid(userid)) {
       return res.status(400).json({ message: "Invalid user ID" });
     }
 
     try {
-      const newCoordinate = new Location({ lat, lng, message, placeName, category, userId }); // Include userId in the new Location
+      const newCoordinate = new Location({ lat, lng, message, placeName, category, userid }); // Include userId in the new Location
       const savedCoordinate = await newCoordinate.save();
       res.status(200).json(savedCoordinate);
     } catch (err) {
@@ -42,7 +42,7 @@ class Map {
       console.log("Valid userId, querying the database...");
   
       // Query for complaints using userId, make sure to use `new` when creating ObjectId
-      const userComplaints = await Location.find({ userId: new mongoose.Types.ObjectId(userid) });
+      const userComplaints = await Location.find({ userid: new mongoose.Types.ObjectId(userid) });
   
       console.log("Query result:", userComplaints);
   
@@ -64,7 +64,7 @@ class Map {
     const { category } = req.query;
     try {
       const query = category ? { category } : {};
-      const messages = await Location.find(query).populate('userId'); // Populate to get user details
+      const messages = await Location.find(query).populate('userid'); // Populate to get user details
   
       console.log('Retrieved complaints:', messages);
   
@@ -76,7 +76,7 @@ class Map {
         lng: message.lng,
         placeName: message.placeName,
         category: message.category,
-        userId: message.userId ? message.userId._id : null, // Adjust based on how you want to return userId
+        userid: message.userid ? message.userid._id : null, // Adjust based on how you want to return userId
         timestamp: message.timestamp,
       }));
   
