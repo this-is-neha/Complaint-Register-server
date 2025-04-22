@@ -26,7 +26,7 @@ const Reactivate = () => {
     }
     try {
       setLoading(true);
-      const response = await axiosInstance.get(`http://localhost:9006/auth/resettok/${activationToken}`, {
+      const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/auth/resettok/${activationToken}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       });
 

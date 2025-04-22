@@ -239,7 +239,7 @@ const LoginPage = () => {
 
   const submitForm = async (data: any) => {
     try {
-      const response = await axiosInstance.post('http://localhost:9006/auth/login', data);
+      const response = await axiosInstance.post('https://complaint-register-server-3.onrender.com/auth/login', data);
 
       localStorage.setItem("accessToken", response.data.result.token.accessToken);
       localStorage.setItem("refreshToken", response.data.result.token.refreshToken);

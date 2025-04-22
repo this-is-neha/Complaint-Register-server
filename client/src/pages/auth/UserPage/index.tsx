@@ -9,7 +9,7 @@ const ExampleComponent = () => {
   const [, setUserData] = useState(registeredUserData);
   const [details, setDetails] = useState<any | null>(null);
   const { userId } = useParams();
-  const baseURL = 'http://127.0.0.1:5500/complaint/server/public/uploads/users/';
+  const baseURL = 'https://complaint-register-server-3.onrender.com/complaint/server/public/uploads/users/';
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {

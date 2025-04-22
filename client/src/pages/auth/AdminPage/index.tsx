@@ -17,7 +17,7 @@ const AdminComponent = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:9006/auth/${userId}`, {
+        const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/auth/${userId}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },

@@ -360,7 +360,7 @@ const RegisterPage = () => {
         formData.append(key, data[key]);
       });
 
-      const response = await axios.post('http://localhost:9006/auth/register', formData, {
+      const response = await axios.post('https://complaint-register-server-3.onrender.com/auth/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

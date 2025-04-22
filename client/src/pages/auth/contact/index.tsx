@@ -21,7 +21,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:9006/feedback/message', formData);
+      const response = await axios.post('https://complaint-register-server-3.onrender.com/feedback/message', formData);
       if (response.status === 200) {
         addMessage(formData);
         setShowModal(true);

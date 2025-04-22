@@ -20,7 +20,7 @@ const MessagesPage: React.FC = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('http://localhost:9006/feedback/getid');
+        const response = await axios.get('https://complaint-register-server-3.onrender.com/feedback/getid');
         setLoadedMessages(response.data);
       } catch (error) {
         console.error('Error fetching messages:', error);

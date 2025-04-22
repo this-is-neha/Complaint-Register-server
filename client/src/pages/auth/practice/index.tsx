@@ -23,7 +23,7 @@ const Activate = () => {
   const activateAccount = async (activationToken:any) => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(`http://localhost:9006/auth/activate/${activationToken}`);
+      const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/auth/activate/${activationToken}`);
       setLoading(false);
 
       if (response.data.result) {

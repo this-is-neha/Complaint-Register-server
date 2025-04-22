@@ -30,7 +30,7 @@ const SearchBox: React.FC = () => {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) throw new Error("Access token not found");
 
-        const userInfoResponse = await axiosInstance.get('http://localhost:9006/auth/me', {
+        const userInfoResponse = await axiosInstance.get('https://complaint-register-server-3.onrender.com/auth/me', {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }

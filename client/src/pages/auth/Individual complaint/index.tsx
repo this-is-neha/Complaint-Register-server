@@ -156,7 +156,7 @@ const Individual = () => {
   const fetchUserComplaints = async (userId: string) => {
     try {
       const token = auth.loggedInUser?.token;
-      const response = await axiosInstance.get(`http://localhost:9006/map/${userId}`, {
+      const response = await axiosInstance.get(`https://complaint-register-server-3.onrender.com/map/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -18,7 +18,7 @@ const Complaints: React.FC = () => {
 
   const fetchComplaints = async (category: string) => {
     try {
-      const response = await axios.get('http://localhost:9006/map/getid', {
+      const response = await axios.get('https://complaint-register-server-3.onrender.com/map/getid', {
         params: { category }
       });
       setLoadedComplaints(response.data);
@@ -30,7 +30,7 @@ const Complaints: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await axios.delete(`http://localhost:9006/map/delete/${id}`);
+      const response = await axios.delete(`https://complaint-register-server-3.onrender.com/map/delete/${id}`);
       if (response.status === 200) {
         const updatedComplaints = loadedComplaints.filter(complaint => complaint._id !== id);
         setLoadedComplaints(updatedComplaints);

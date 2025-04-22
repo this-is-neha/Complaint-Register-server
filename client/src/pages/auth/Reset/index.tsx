@@ -15,7 +15,7 @@ const ChangePassword = () => {
             const token = localStorage.getItem('accessToken');
 
             const response = await axios.put(
-                "http://localhost:9006/auth/reset-password",
+                "https://complaint-register-server-3.onrender.com/auth/reset-password",
                 { newPassword: data.newPassword },
                 {
                     headers: { Authorization: `Bearer ${token}` },

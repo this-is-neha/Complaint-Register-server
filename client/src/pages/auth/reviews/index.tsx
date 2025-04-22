@@ -32,7 +32,7 @@ function Poll() {
 
   const fetchVotes = async () => {
     try {
-      const response = await axios.get('http://localhost:9006/poll/votes');
+      const response = await axios.get('https://complaint-register-server-3.onrender.com/poll/votes');
       const data = response.data;
       const newVotes = candidates.map(candidate => data[candidate] || 0);
       setVotes(newVotes);
@@ -44,7 +44,7 @@ function Poll() {
   const vote = async (candidateIndex:any) => {
     const candidateName = candidates[candidateIndex];
     try {
-      await axios.post(`http://localhost:9006/poll/vote/${candidateName}`);
+      await axios.post(`https://complaint-register-server-3.onrender.com/poll/vote/${candidateName}`);
       fetchVotes();
     } catch (error) {
       console.error('Error submitting vote:', error);
