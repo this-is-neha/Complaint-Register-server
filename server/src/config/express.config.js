@@ -166,4 +166,8 @@ app.use((error, req, res, next) => {
   });
 });
 
+<<<<<<< HEAD
 module.exports = app;
+=======
+module.exports = app;
+>>>>>>> db2d3d831f6a6008be275313f71597a58ae1d147
