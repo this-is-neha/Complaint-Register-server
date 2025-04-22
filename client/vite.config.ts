@@ -18,9 +18,5 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   base: "/", // 👈 SUPER important for correct routing on Netlify
-  build: {
-    rollupOptions: {
-      external: ['framer-motion']
-    }
-  }
+
 })
