@@ -1,20 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import AuthContext from "../../../context"; // import your AuthContext
+import AuthContext from "../../../context"; 
 import { BellIcon, UserIcon } from '@heroicons/react/24/outline';
-import axiosInstance from "axios"; // Assuming you're using Axios
-
+import axiosInstance from "axios"; 
+const baseURL = import.meta.env.VITE_API_BASE_URL; // Adjust this according to your environment
 const HeaderComponent = () => {
-  // const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [unseenNotificationsCount, setUnseenNotificationsCount] = useState(0); // state for unseen notifications count
-  const { loggedInUser } = useContext(AuthContext); // use AuthContext to get loggedInUser
+ 
+  const [unseenNotificationsCount, setUnseenNotificationsCount] = useState(0); 
+  const { loggedInUser } = useContext(AuthContext); 
 
-  // Function to toggle the mobile menu
-  // const toggleMobileMenu = () => {
-  //   setIsMobileMenuOpen(!isMobileMenuOpen);
-  // };
-
-  // Fetch unseen notifications count (example API call)
   useEffect(() => {
     if (loggedInUser) {
       fetchUnseenNotificationsCount();
@@ -24,9 +18,9 @@ const HeaderComponent = () => {
   const fetchUnseenNotificationsCount = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await axiosInstance.get("http://localhost:9006/map/unseencount", {
+      const response = await axiosInstance.get(`${baseURL}/map/unseencount`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Proper handling of token
+          Authorization: `Bearer ${token}`, 
         }
       });
       setUnseenNotificationsCount(response.data.unseenCount);
