@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const mongoose=require("mongoose")
 
-
+console.log("Mongo URL:",process.env.MONGO_DB_URL)
 
 const { MONGO_DB_URL, MONGO_DB_NAME } = process.env;
 
