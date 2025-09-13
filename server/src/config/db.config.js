@@ -16,6 +16,7 @@ mongoose.connect(MONGO_DB_URL,{
 })
 .catch((err)=>{
 console.log("Error while connecting Mongodb")
+console.log("Error:",err    )
 process.exit(1)
 })
 
