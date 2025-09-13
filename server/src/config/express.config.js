@@ -13,7 +13,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: "https://eclectic-entremet-69d9a6.netlify.app",
+    origin: ["https://eclectic-entremet-69d9a6.netlify.app","http://localhost:5173"],
     credentials: true,
   })
 );
