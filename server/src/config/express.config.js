@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
-const cors = require("cors"); // ✅ Only declared once
+const cors = require("cors"); //
 const Joi = require("joi");
 
 require("./db.config");
